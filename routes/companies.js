@@ -1,7 +1,21 @@
 const express = require("express");
+const multer = require("multer");
 const Company = require("../model/company");
 
 const router = express.Router();
+
+const storageConfing = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "image");
+  },
+  filename: (req, file, cb) => {
+    const filename =
+      Date.now() + "-" + file.originalname.toLowerCase().split(" ").join("-");
+    cb(null, filename);
+  },
+});
+
+const upload = multer({ storage: storageConfing });
 
 router.get("/", (req, res) => {
   Company.find({})
@@ -61,12 +75,15 @@ router.get("/:type", (req, res) => {
     });
 });
 
-router.post("/", async (req, res) => {
+router.post("/", upload.single("image"), async (req, res) => {
+  const url = "http://" + req.get("host");
+
   const company = new Company({
     company_name: req.body.company_name,
     company_type: req.body.company_type,
     company_description: req.body.company_description,
     alumni_detail: req.body.alumni,
+    company_logo: url + "/image/" + req.file.filename
   });
 
   company

@@ -6,29 +6,35 @@ const companySchema = new mongoose.Schema(
       type: String,
       required: true,
       unquie: true,
-      lowercase: true
+      lowercase: true,
     },
     company_type: {
       type: String,
       required: true,
       enum: ["core", "software"],
-      lowercase: true
+      lowercase: true,
     },
-    alumni_detail: [{
-      name: {
-        type: String,
+    alumni_detail: [
+      {
+        name: {
+          type: String,
+        },
+        phone: {
+          type: String,
+        },
+        batch: {
+          type: Number,
+        },
+        email: {
+          type: String,
+        },
       },
-      phone: {
-        type: String,
-      },
-      batch: {
-        type: Number,
-      },
-      email: {
-        type: String
-      }
-    }],
+    ],
     company_description: {
+      type: String,
+      required: true,
+    },
+    company_logo: {
       type: String,
       required: true,
     },

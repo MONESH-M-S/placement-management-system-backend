@@ -49,7 +49,7 @@ From here you can *Get, Post, Put, Delete* opertaion can be perfomed on Companie
     Route -> `/api/v1/company/`\
     Method -> **POST**\
     Request -> {'company_name': value, 'company_type': value, 'company_description': value, 
-               'alumni': [value]}\
+               'alumni': [value], 'company_logo': value}\
                 `alumni value should be as [{'name': value, 'phone': value, 'batch': value, 'email': value}]`\
     Response -> {'company': value | null, 'message': response message}\
 
@@ -57,7 +57,7 @@ From here you can *Get, Post, Put, Delete* opertaion can be perfomed on Companie
     Route -> `/api/v1/company/:id`\
     Method -> **PUT**\
     Request -> {'company_name': value, 'company_type': value, 'company_description': value, 
-               'alumni': [value]}\
+               'alumni': [value], 'company_logo': value}\
                 `alumni value should be as [{'name': value, 'phone': value, 'batch': value, 'email': value}]`\
     Response -> {'company': value | null, 'message': response message}\
 
