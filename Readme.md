@@ -39,7 +39,7 @@ From here you can *Get, Post, Put, Delete* opertaion can be perfomed on Companie
     Response -> {'companies': true | false, 'message': response message}\
 
 2. To Get Company by type,\
-    `Note: Type should be ['core', 'software']`
+    `Note: Type should be ['core', 'software']`\
     Route -> `/api/v1/company/:type`\
     Method -> **GET**\
     Request -> Nil\
