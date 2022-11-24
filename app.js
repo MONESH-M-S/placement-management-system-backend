@@ -29,16 +29,12 @@ mongoose
   });
 
 const authRoutes = require("./routes/auth");
-// const userRoutes = require("./routes/users");
-// const activityRoutes = require("./routes/activites");
-// const availableMentorsRoute = require("./routes/available-mentors");
-// const markRoute = require("./routes/marks");
+const companyRoutes = require("./routes/companies");
+const adminRoutes = require("./routes/admins");
 
 app.use(`/auth`, authRoutes);
-// app.use(`/user`, userRoutes);
-// app.use(`/activity`, activityRoutes);
-// app.use(`/available-mentors`, availableMentorsRoute);
-// app.use(`/mark`, markRoute);
+app.use(`/company`, companyRoutes);
+app.use(`/admin`, adminRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

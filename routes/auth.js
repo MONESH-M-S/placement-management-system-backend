@@ -1,6 +1,5 @@
 const express = require("express");
 const Admin = require("../model/admin");
-require("dotenv/config");
 
 const router = express.Router();
 

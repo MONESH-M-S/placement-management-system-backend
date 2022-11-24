@@ -1,19 +1,5 @@
 const mongoose = require("mongoose");
 
-const alumniSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  phone: {
-    type: String,
-    required: true,
-  },
-  batch: {
-    type: String,
-  },
-});
-
 const companySchema = new mongoose.Schema(
   {
     company_name: {
@@ -26,7 +12,20 @@ const companySchema = new mongoose.Schema(
       required: true,
       enum: ["core", "software"],
     },
-    alumni: [alumniSchema],
+    alumni_detail: [{
+      name: {
+        type: String,
+      },
+      phone: {
+        type: String,
+      },
+      batch: {
+        type: Number,
+      },
+      email: {
+        type: String
+      }
+    }],
     company_description: {
       type: String,
       required: true,
