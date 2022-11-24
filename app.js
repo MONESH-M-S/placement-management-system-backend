@@ -32,9 +32,9 @@ const authRoutes = require("./routes/auth");
 const companyRoutes = require("./routes/companies");
 const adminRoutes = require("./routes/admins");
 
-app.use(`api/v1/auth`, authRoutes);
-app.use(`api/v1/company`, companyRoutes);
-app.use(`api/v1/admin`, adminRoutes);
+app.use(`/api/v1/auth`, authRoutes);
+app.use(`/api/v1/company`, companyRoutes);
+app.use(`/api/v1/admin`, adminRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

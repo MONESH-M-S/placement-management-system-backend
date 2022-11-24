@@ -75,7 +75,7 @@ router.get("/:type", (req, res) => {
     });
 });
 
-router.post("/", upload.single("image"), async (req, res) => {
+router.post("/", upload.single("company_logo"), async (req, res) => {
   const url = "http://" + req.get("host");
 
   const company = new Company({
