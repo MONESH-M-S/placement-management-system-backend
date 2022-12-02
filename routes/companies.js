@@ -10,7 +10,9 @@ const storageConfing = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const filename =
-      Date.now() + "-qwerty" + file.originalname.toLowerCase().split(" ").join("-");
+      Date.now() +
+      "-qwerty" +
+      file.originalname.toLowerCase().split(" ").join("-");
     cb(null, filename);
   },
 });
@@ -106,9 +108,8 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/", upload.single("image"), async (req, res) => {
-  const url = req.protocol + '://' + req.get("host");
+  const url = req.protocol + "://" + req.get("host");
 
-  console.log(req.body);
   const company = new Company({
     company_name: req.body.company_name,
     company_type: req.body.company_type,
@@ -141,19 +142,27 @@ router.post("/", upload.single("image"), async (req, res) => {
 });
 
 router.put("/:id", (req, res) => {
+  console.log(req.body.alumni);
+
   Company.findOneAndUpdate(
     { _id: req.params.id },
-    { $push: { alumni_detail: req.body.alumni } },
+    {
+      alumni_detail: req.body.alumni,
+      company_name: req.body.company_name,
+      company_type: req.body.company_type,
+      company_description: req.body.company_description,
+      company_logo: req.body.company_logo,
+    },
     { new: true }
   )
     .then((company) => {
       if (company._id) {
         return res
-          .json({ company: company, message: "Alumni Updated Successfully!" })
+          .json({ company: company, message: "Company Updated Successfully!" })
           .status(200);
       }
       return res
-        .json({ company: null, message: "Updating Alumni Failed!" })
+        .json({ company: null, message: "Updating Company Failed!" })
         .status(400);
     })
     .catch((err) => {
