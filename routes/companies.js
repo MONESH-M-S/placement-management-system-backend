@@ -10,7 +10,7 @@ const storageConfing = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const filename =
-      Date.now() + "-" + file.originalname.toLowerCase().split(" ").join("-");
+      Date.now() + "-qwerty" + file.originalname.toLowerCase().split(" ").join("-");
     cb(null, filename);
   },
 });
@@ -19,6 +19,7 @@ const upload = multer({ storage: storageConfing });
 
 router.get("/", (req, res) => {
   Company.find({})
+    .sort({ updatedAt: -1 })
     .then((companies) => {
       if (companies.length > 0) {
         return res
@@ -46,7 +47,7 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/:type", (req, res) => {
+router.get("/type/:type", (req, res) => {
   Company.find({ type: req.params.type })
     .then((companies) => {
       if (companies.length > 0) {
@@ -75,15 +76,45 @@ router.get("/:type", (req, res) => {
     });
 });
 
-router.post("/", upload.single("company_logo"), async (req, res) => {
-  const url = "http://" + req.get("host");
+router.get("/:id", (req, res) => {
+  Company.findById(req.params.id)
+    .then((company) => {
+      if (company._id) {
+        return res
+          .json({
+            company: company,
+            message: "Company Fetched Successfully!",
+          })
+          .status(200);
+      }
+      return res
+        .json({
+          company: [],
+          message: `No company available with id '${req.params.type}'`,
+        })
+        .status(200);
+    })
+    .catch((err) => {
+      console.log(err);
+      return res
+        .json({
+          company: null,
+          message: "Internal server error, Try again later",
+        })
+        .status(200);
+    });
+});
 
+router.post("/", upload.single("image"), async (req, res) => {
+  const url = req.protocol + '://' + req.get("host");
+
+  console.log(req.body);
   const company = new Company({
     company_name: req.body.company_name,
     company_type: req.body.company_type,
     company_description: req.body.company_description,
-    alumni_detail: req.body.alumni,
-    company_logo: url + "/image/" + req.file.filename
+    alumni_detail: JSON.parse(req.body.alumni),
+    company_logo: url + "/image/" + req.file.filename,
   });
 
   company
