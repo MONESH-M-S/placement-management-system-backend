@@ -1,23 +1,9 @@
 const express = require("express");
-const multer = require("multer");
 const Company = require("../model/company");
+const cloudinary = require("../utils/cloudinary");
+const upload = require("../utils/multer");
 
 const router = express.Router();
-
-const storageConfing = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "image");
-  },
-  filename: (req, file, cb) => {
-    const filename =
-      Date.now() +
-      "-qwerty" +
-      file.originalname.toLowerCase().split(" ").join("-");
-    cb(null, filename);
-  },
-});
-
-const upload = multer({ storage: storageConfing });
 
 router.get("/", (req, res) => {
   Company.find({})
@@ -108,14 +94,15 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/", upload.single("image"), async (req, res) => {
-  const url = req.protocol + "://" + req.get("host");
+  const result = await cloudinary.uploader.upload(req.file.path);
 
   const company = new Company({
     company_name: req.body.company_name,
     company_type: req.body.company_type,
     company_description: req.body.company_description,
     alumni_detail: JSON.parse(req.body.alumni),
-    company_logo: url + "/image/" + req.file.filename,
+    company_logo: result.secure_url,
+    cloudinary_id: result.public_id,
   });
 
   company
